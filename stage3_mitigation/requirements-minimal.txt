@@ -1,0 +1,41 @@
+# Stage 3 (Table 8) only. No vision or API dependencies needed.
+# Tested on Python 3.10 (the environment the paper's runs used) and 3.12.
+#
+#   pip install -r stage3_mitigation/requirements-minimal.txt
+#
+# ── torch is deliberately NOT pinned here ──────────────────────────────────
+# Container images (RunPod, Colab, NGC) ship a matched torch + torchvision pair.
+# Reinstalling torch alone leaves their torchvision compiled against the old
+# torch, and transformers then dies at import time with:
+#
+#     RuntimeError: operator torchvision::nms does not exist
+#
+# So: use whatever torch the image already provides. Stage 3 only fine-tunes
+# DistilBERT, which is insensitive to the torch version.
+#
+# If torch is missing, or you want the exact versions the paper used, install
+# BOTH in one command so the pair stays consistent:
+#
+#     pip install torch==2.11.0 torchvision==0.26.0 \
+#         --index-url https://download.pytorch.org/whl/cu128
+#
+# If you already broke the pair, either repair it or drop torchvision entirely
+# (transformers skips it when absent):
+#
+#     pip install --force-reinstall torchvision==0.26.0   # match your torch
+#     pip uninstall -y torchvision                        # or just remove it
+# ───────────────────────────────────────────────────────────────────────────
+
+# transformers must be pinned: warmup_ratio was deprecated and then removed,
+# which breaks TrainingArguments on newer releases.
+transformers==5.12.1
+accelerate==1.13.0
+
+# numpy 1.24.3 has no cp312 wheel and its source build fails on Python 3.12
+# (it imports pkgutil.ImpImporter, removed in 3.12).
+numpy==1.24.3; python_version < "3.12"
+numpy>=1.26.4,<2; python_version >= "3.12"
+
+pandas==2.3.3
+scikit-learn==1.7.2
+tqdm

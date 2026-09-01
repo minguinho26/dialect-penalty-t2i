@@ -1,0 +1,7 @@
+category,mean_sim,std_sim,n_pairs
+Benign_animals,0.67181927,0.090525724,79800
+Benign_food,0.660283,0.0922931,79800
+Benign_human_beings,0.6187826,0.0885406,79800
+Benign_landscapes,0.6322683,0.09090098,79800
+Benign_transport_vehicles,0.65022033,0.09729769,79800
+Benign_home_scenes,0.69474894,0.0865784,79800

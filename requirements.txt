@@ -1,0 +1,79 @@
+# Versions are pinned to the environment the paper's experiments ran in.
+#
+#   pip install -r requirements.txt
+#   python common/check_env.py      # verify before running anything
+#
+# ── torch is deliberately NOT pinned here ──────────────────────────────────
+# Container images (RunPod, Colab, NGC) ship torch together with torchvision and
+# torchaudio, all built against the same ABI. Replacing torch alone leaves the
+# other two on the old build, and transformers touches both at import time, so
+# everything dies before reaching this project's code:
+#
+#     RuntimeError: operator torchvision::nms does not exist
+#     OSError: libtorchaudio.so: undefined symbol: _ZN3c104cuda29c10_cuda_...
+#
+# transformers guards those imports with is_torchvision_available() /
+# is_torchaudio_available(), but those only check whether the package is
+# *installed*, not whether it *loads* — a broken install passes the guard and
+# then raises. So use whatever torch the image already provides.
+#
+# If torch is genuinely missing, install the trio in ONE command so the builds
+# match (this is what the paper's environment used):
+#
+#     pip install torch==2.11.0 torchvision==0.26.0 torchaudio==2.11.0 \
+#         --index-url https://download.pytorch.org/whl/cu128
+#
+# If you already broke the pairing, repair or remove the companions:
+#
+#     pip uninstall -y torchvision torchaudio     # fine unless you run stage 2
+#
+# Stage 2 (image-level experiments) needs torchvision; stages 1 and 3 do not.
+# ───────────────────────────────────────────────────────────────────────────
+#
+# transformers must stay pinned: warmup_ratio was deprecated and then removed,
+# which breaks stage3_mitigation on newer releases. The training script converts
+# it to an equivalent warmup_steps if it has to, but pinning reproduces the
+# reported runs exactly.
+
+# ── Core ──  (torch comes from your image or the command above)
+transformers==5.12.1
+datasets==4.8.4
+accelerate==1.13.0
+huggingface_hub==1.20.1
+
+# ── Data / analysis ──
+# numpy: 1.24.3 lacks a wheel for Python 3.12 and falls back to source build, which fails 
+# by referencing pkgutil.ImpImporter (removed in 3.12). Branch by interpreter version.
+# (The original experiment used Python 3.10 + numpy 1.24.3.)
+numpy==1.24.3; python_version < "3.12"
+numpy>=1.26.4,<2; python_version >= "3.12"
+pandas==2.3.3
+scipy==1.15.3
+scikit-learn==1.7.2
+statsmodels==0.14.6
+tqdm
+
+# ── Plotting ──
+matplotlib==3.10.8
+seaborn==0.13.2
+
+# ── Vision / T2I ──
+# NOTE: the stage 2 image-level dependencies live in requirements-stage2.txt.
+# lpips and open_clip_torch declare torchvision as a requirement, so installing
+# them makes pip fetch torchvision — which re-breaks the pairing on an image
+# whose torch you kept. Install them only when you actually run stage 2, and
+# check the environment afterwards:
+#     pip install -r requirements-stage2.txt && python common/check_env.py
+Pillow==12.1.1
+
+# ── LLM API clients (data construction and the back-translation audit only) ──
+openai==2.30.0
+anthropic==0.111.0
+google-genai
+
+# ── VLM evaluators (extended_analysis/ only) ──
+qwen-vl-utils
+
+# ── Q16 / LAION NSFW image detector (extended_analysis/ only) ──
+tensorflow>=2.12
+autokeras

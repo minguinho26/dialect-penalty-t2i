@@ -1,0 +1,6 @@
+Dialect,N,SAE<->Dial mean,SAE<->Dial std,WithinCat baseline mean,WithinCat baseline std,Gap (SAE-Dial - baseline)
+AAVE,2400,0.6859,0.1843,0.5645,0.0452,0.1214
+ChcE,2400,0.6084,0.1381,0.5645,0.0452,0.0439
+CollSgE,2400,0.7392,0.1987,0.5645,0.0452,0.1748
+IndE,2400,0.7549,0.1899,0.5645,0.0452,0.1904
+JamE,2400,0.6686,0.2009,0.5645,0.0452,0.1041

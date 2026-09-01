@@ -1,0 +1,59 @@
+# ── Secrets ──
+# All credentials are read from environment variables by common/env_keys.py.
+# Never hardcode a key in source.
+.env
+.env.*
+!.env.example
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# ── OS / editors ──
+.DS_Store
+.AppleDouble
+.LSOverride
+.vscode/
+.idea/
+*.swp
+
+# ── Model weights (distributed separately; see README) ──
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.pb
+*.onnx
+*.bin
+*.safetensors
+# exceptions: our own small trained weights ship with the repo
+!stage2_image_level/Promptguard_weights/*.safetensors
+# multihead_checkpoints/ holds third-party weights (Unsafe Diffusion, Qu et al.)
+# that we do not redistribute, so it stays ignored.
+
+# ── Generated images: never released (dual-use). See Ethics in README. ──
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.bmp
+*.tiff
+
+# ── Regenerable training data (stage3_mitigation/run_all.sh step 1) ──
+stage3_mitigation/data/
+
+# ── Run logs ──
+*.log
+
+# Track the experiment output parquet files (results/experiment_outputs/)
+!results/experiment_outputs/**/*.parquet

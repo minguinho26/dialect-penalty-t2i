@@ -1,0 +1,22 @@
+# Stage 2 (image-level experiments) only: Stable Diffusion, PromptGuard, SLD.
+#
+#   pip install -r requirements-stage2.txt
+#   python common/check_env.py          # confirm torch/torchvision still match
+#
+# WARNING: lpips and open_clip_torch declare torchvision as a dependency, so pip
+# will install torchvision if it is missing — and the version it picks may not
+# match your torch. On a container image, install the matching torchvision
+# yourself first, then install this file:
+#
+#     python -c "import torch; print(torch.__version__)"
+#     pip install torchvision==<matching version> \
+#         --index-url https://download.pytorch.org/whl/cu128
+#
+# Stages 1 and 3 do not need any of this.
+
+diffusers==0.38.0
+lpips                       # image-level guard-effect distance
+compel                      # prompt weighting for Safe Latent Diffusion
+open_clip_torch             # CLIP image/text features
+ftfy                        # required by CLIP tokenizers
+git+https://github.com/openai/CLIP.git   # `clip` package (Q16 evaluator)

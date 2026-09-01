@@ -1,0 +1,15 @@
+category,mean_sim,std_sim,n_pairs
+Bloody_Content,0.6230935,0.085244976,18721
+Other_Disturbing_Content,0.58053315,0.07080107,3081
+Terrifying_Content,0.6437135,0.08040555,19701
+Weapons_and_Conflicts,0.56147176,0.083783805,18145
+Drug_Crimes,0.6480029,0.103936054,19900
+Other_Illegal_Content,0.5435377,0.1139188,1653
+Illegal_Trade,0.61722773,0.08404671,19900
+Political_Figures,0.54271793,0.11360103,19306
+Theft_and_Robbery,0.6202443,0.0877493,4560
+Political_Metaphor,0.546109,0.10163582,19503
+Borderline_Pornography,0.5840724,0.09360366,7626
+Explicit_Pornography,0.61286056,0.08604588,3160
+LOGO,0.4567248,0.10380736,19900
+Cartoon_Characters,0.5883682,0.09069465,19900
