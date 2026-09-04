@@ -115,11 +115,11 @@ license. Redistributed third-party data remains under its original terms; see At
 ## Citation
 
 ```bibtex
-@misc{audit_dialect,
-      title={Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines}, 
-      author={Minkyu Kim and Juhwan Choi and YoungBin Kim},
-      booktitle={Findings of the Association for Computational Linguistics: EMNLP 2026},
-      year={2026},
-      url={https://arxiv.org/abs/2608.29589}, 
+@inproceedings{audit_dialect,
+    title={Not Safe for All: Auditing the Dialect Penalty in Text-to-Image Safety Pipelines}, 
+    author={Minkyu Kim and Juhwan Choi and YoungBin Kim},
+    booktitle={Findings of the Association for Computational Linguistics: EMNLP 2026},
+    year={2026},
+    url={https://arxiv.org/abs/2608.29589}
 }
 ```
